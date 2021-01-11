@@ -55,6 +55,11 @@ function filterItems(students, query) {
     return null;
 }
 
+/**
+ * Creates search form with javascript
+ *
+ * @return {Element}
+ */
 function createSearchBlock() {
     const searchLabel = createElement("label", "className", "student-search");
     searchLabel.for = "search";
@@ -88,41 +93,29 @@ function showPage(list, page) {
     studentList.innerHTML = '';
 
     /**
-     * Creates student card with student information
+     * Creates student card with student information with string literals :)
      *
      * @returns list element with student details
      * @param student
      */
     function createStudentListItem(student) {
-        const listItem = createElement("li", "className", "student-item cf");
-        const divStudentDetails = createElement("div", "className", "student-details");
-        const imgAvatar = createElement("img", "className", "avatar");
-        imgAvatar.src = student.picture.large;
-        imgAvatar.alt = `${student.name.title + " " + student.name.first + " " + student.name.last}`;
-        divStudentDetails.appendChild(imgAvatar);
-        const h3StudentName = createElement("h3", "textContent", `${student.name.first + " " + student.name.last}`);
-        divStudentDetails.appendChild(h3StudentName);
-        const spanStudentEmail = createElement("span", "className", "email");
-        spanStudentEmail.innerHTML = student.email;
-        divStudentDetails.appendChild(spanStudentEmail);
-
-        listItem.appendChild(divStudentDetails);
-
-        const divJoinDetails = createElement("div", "className", "joined-details");
-        const spanRegisterDate = createElement("span", "className", "date");
-        spanRegisterDate.innerHTML = `Joined ${student.registered.date}`;
-        divJoinDetails.appendChild(spanRegisterDate);
-
-        listItem.appendChild(divJoinDetails);
-
-        return listItem;
+        return `<li class="student-item cf">
+          <div class="student-details">
+            <img class="avatar" src="${student.picture.large}" alt="${student.name.title + " " + student.name.first + " " + student.name.last}">
+            <h3>${student.name.first + " " + student.name.last}</h3>
+            <span class="email">${student.email}</span>
+          </div>
+          <div class="joined-details">
+            <span class="date">Joined ${student.registered.date}</span>
+          </div>
+        </li>`;
     }
 
     for (let i = 0; i < list.length; i++) {
         if (i >= startIndex && i < endIndex) {
             const student = list[i];
             const listItem = createStudentListItem(student);
-            studentList.insertAdjacentHTML("beforeend", listItem.outerHTML);
+            studentList.insertAdjacentHTML("beforeend", listItem);
         }
     }
 }
